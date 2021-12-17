@@ -43,10 +43,17 @@ const menuItemsDB = [
     }
 ]
 
+const taxValue = 0.0975;
 
 const addFeatureValue = (element, className, value) => {
   const featureValueElement = element.querySelector(className);
   featureValueElement.textContent = value;
+};
+
+const addImageValue = (element, className, item) => {
+  const imageValueElement = element.querySelector(className);
+  imageValueElement.alt = item.alt;
+  imageValueElement.src = 'images/' + item.image;
 };
 
 const menuItems = document.querySelectorAll('.menu-item');
@@ -55,6 +62,10 @@ const emptyText = document.querySelector('.empty');
 const cartItemTemplate = document.querySelector('#cart-item-template').content;
 const cartItemNode = cartItemTemplate.querySelector('.cart-item');
 const cartSummary = document.querySelector('.cart-summary');
+
+const subtotal = document.querySelector('.amount.subtotal');
+const tax = document.querySelector('.amount.tax');
+const total = document.querySelector('.amount.total');
 
 for (let i = 0; i < menuItems.length; i++) {
   let plateButtons = menuItems[i].querySelector('.content').querySelector('.add');
@@ -68,21 +79,59 @@ for (let i = 0; i < menuItems.length; i++) {
     const quantity = cartItem.querySelector('.quantity');
     const quantityTotal = cartItem.querySelector('.quantity-total');
     addFeatureValue(cartItem, '.name', menuItemsDB[i].name);
-    addFeatureValue(cartItem, '.price','$' + menuItemsDB[i].price / 100);
-    addFeatureValue(cartItem, '.subtotal','$' + (menuItemsDB[i].price / 100 * quantityTotal.textContent).toFixed(2));
-
+    addFeatureValue(cartItem, '.price', '$' + menuItemsDB[i].price / 100);
+    addFeatureValue(cartItem, '.item-subtotal', '$' + (menuItemsDB[i].price / 100 * quantityTotal.textContent).toFixed(2));
+    addImageValue(cartItem, '.plate-image', menuItemsDB[i]);
 
     const decreaseButton = cartItem.querySelector('.decrease');
     const increaseButton = cartItem.querySelector('.increase');
 
     increaseButton.addEventListener('click', () => {
-      quantity.textcontent = quantity.textContent++;
-      quantityTotal.textcontent = quantityTotal.textContent++;
-      addFeatureValue(cartItem, '.subtotal','$' + (menuItemsDB[i].price / 100 * quantityTotal.textContent).toFixed(2));
+      quantity.textContent++;
+      quantityTotal.textContent++;
+      addFeatureValue(cartItem, '.item-subtotal', '$' + (menuItemsDB[i].price / 100 * quantityTotal.textContent).toFixed(2));
     });
 
+    decreaseButton.addEventListener('click', () => {
+      if (Number(quantity.textContent) > 1) {
+        quantity.textContent--;
+        quantityTotal.textContent--;
+        addFeatureValue(cartItem, '.item-subtotal', '$' + (menuItemsDB[i].price / 100 * quantityTotal.textContent).toFixed(2));
+      } else {
+        plateButtons.classList.add('add');
+        plateButtons.classList.remove('in-cart');
+        plateButtons.innerHTML = 'Add to Cart';
+        cartSummary.removeChild(cartItem);
+        plateButtons.disabled = false;
+        subtotal.textContent = '$00.00';
+        tax.textContent = '$0.00';
+        total.textContent = '$00.00';
+      }
+    });
 
     cartSummary.appendChild(cartItem);
-
+    plateButtons.disabled = true;
   });
 };
+
+const observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if (!cartSummary.hasChildNodes()) {
+      emptyText.classList.remove('invisible');
+    } else {
+      const subtotalsList = document.querySelectorAll('.item-subtotal');
+      const subtotalsArray = [...subtotalsList];
+      const subtotalsValuesArray = [];
+      subtotalsArray.forEach(subtotalsArrayItem => {
+        subtotalsValuesArray.push(Number(subtotalsArrayItem.textContent.substr(1)));
+      });
+
+      const subtotalSum = subtotalsValuesArray.reduce((a, b) => a + b);
+      subtotal.textContent = '$' + subtotalSum.toFixed(2);
+      tax.textContent = '$' + (subtotalSum * taxValue).toFixed(2);
+      total.textContent = '$' + (subtotalSum * (1 + taxValue)).toFixed(2);
+    }
+  });
+});
+const config = {childList: true, characterData: true, subtree: true};
+observer.observe(cartSummary, config);
