@@ -11,70 +11,91 @@
 
 <body>
 
+  <template id="cart-item-template">
+    <li class="cart-item">
+      <div class="plate">
+        <img src="images/plate__fish-sticks-fries.png" alt="Fish Sticks and Fries" class="plate plate-image" />
+        <div class="quantity">1</div>
+      </div>
+      <div class="content">
+        <p class="name">Fish Sticks and Fries</p>
+        <p class="price">$6.34</p>
+      </div>
+      <div class="quantity__wrapper">
+        <button class="decrease">
+          <img src="images/chevron.svg" />
+        </button>
+        <div class="quantity quantity-total">1</div>
+        <button class="increase">
+          <img src="images/chevron.svg" />
+        </button>
+      </div>
+      <div class="subtotal">
+        $6.34
+      </div>
+    </li>
+  </template>
+
   <div class="wrapper menu">
     <div class="panel">
       <h1>To Go Menu</h1>
       <ul class="menu">
-        <li>
+        <li class="menu-item">
           <div class="plate">
-            <img src="images/plate__french-fries.png" alt="French Fries" class="plate" />
+            <img src="images/plate__french-fries.png" alt="French Fries" class="plate plate-image" />
           </div>
           <div class="content">
-            <p class="menu-item">French Fries with Ketchup</p>
+            <p class="name">French Fries with Ketchup</p>
             <p class="price">$2.23</p>
-            <!-- <button class="in-cart">
-              <img src="images/check.svg" alt="Check" />
-              In Cart
-            </button> -->
             <button class="add">Add to Cart</button>
           </div>
         </li>
-        <li>
+        <li class="menu-item">
           <div class="plate">
-            <img src="images/plate__salmon-vegetables.png" alt="Salmon and Vegetables" class="plate" />
+            <img src="images/plate__salmon-vegetables.png" alt="Salmon and Vegetables" class="plate plate-image" />
           </div>
           <div class="content">
-            <p class="menu-item">Salmon and Vegetables</p>
+            <p class="name">Salmon and Vegetables</p>
             <p class="price">$5.12</p>
             <button class="add">Add to Cart</button>
           </div>
         </li>
-        <li>
+        <li class="menu-item">
           <div class="plate">
-            <img src="images/plate__spaghetti-meat-sauce.png" alt="Spaghetti Meat Sauce" class="plate" />
+            <img src="images/plate__spaghetti-meat-sauce.png" alt="Spaghetti Meat Sauce" class="plate plate-image" />
           </div>
           <div class="content">
-            <p class="menu-item">Spaghetti with Meat Sauce</p>
+            <p class="name">Spaghetti with Meat Sauce</p>
             <p class="price">$7.82</p>
             <button class="add">Add to Cart</button>
           </div>
         </li>
-        <li>
+        <li class="menu-item">
           <div class="plate">
-            <img src="images/plate__bacon-eggs.png" alt="Bacon, Eggs, and Toast" class="plate" />
+            <img src="images/plate__bacon-eggs.png" alt="Bacon, Eggs, and Toast" class="plate plate-image" />
           </div>
           <div class="content">
-            <p class="menu-item">Bacon, Eggs, and Toast</p>
+            <p class="name">Bacon, Eggs, and Toast</p>
             <p class="price">$5.99</p>
             <button class="add">Add to Cart</button>
           </div>
         </li>
-        <li>
+        <li class="menu-item">
           <div class="plate">
-            <img src="images/plate__chicken-salad.png" alt="Chicken Salad with Parmesean" class="plate" />
+            <img src="images/plate__chicken-salad.png" alt="Chicken Salad with Parmesean" class="plate plate-image" />
           </div>
           <div class="content">
-            <p class="menu-item">Chicken Salad with Parmesan</p>
+            <p class="name">Chicken Salad with Parmesan</p>
             <p class="price">$6.98</p>
             <button class="add">Add to Cart</button>
           </div>
         </li>
-        <li>
+        <li class="menu-item">
           <div class="plate">
-            <img src="images/plate__fish-sticks-fries.png" alt="Fish Sticks and Fries" class="plate" />
+            <img src="images/plate__fish-sticks-fries.png" alt="Fish Sticks and Fries" class="plate plate-image" />
           </div>
           <div class="content">
-            <p class="menu-item">Fish Sticks and Fries</p>
+            <p class="name">Fish Sticks and Fries</p>
             <p class="price">$6.34</p>
             <button class="add">Add to Cart</button>
           </div>
@@ -84,57 +105,9 @@
 
     <div class="panel cart">
       <h1>Your Cart</h1>
-      <!-- <p class="empty">Your cart is empty.</p> -->
+      <p class="empty">Your cart is empty.</p>
 
       <ul class="cart-summary">
-
-        <!-- item 1 -->
-        <li class="cart-item">
-          <div class="plate">
-            <img src="images/plate__fish-sticks-fries.png" alt="Fish Sticks and Fries" class="plate" />
-            <div class="quantity">1</div>
-          </div>
-          <div class="content">
-            <p class="menu-item">Fish Sticks and Fries</p>
-            <p class="price">$6.34</p>
-          </div>
-          <div class="quantity__wrapper">
-            <button class="decrease">
-              <img src="images/chevron.svg" />
-            </button>
-            <div class="quantity">1</div>
-            <button class="increase">
-              <img src="images/chevron.svg" />
-            </button>
-          </div>
-          <div class="subtotal">
-            $6.34
-          </div>
-        </li>
-
-        <!-- item 2 -->
-        <li class="cart-item">
-          <div class="plate">
-            <img src="images/plate__french-fries.png" alt="French Fries" class="plate" />
-            <div class="quantity">2</div>
-          </div>
-          <div class="content">
-            <p class="menu-item">French Fries with Ketchup</p>
-            <p class="price">$2.23</p>
-          </div>
-          <div class="quantity__wrapper">
-            <button class="decrease">
-              <img src="images/chevron.svg" />
-            </button>
-            <div class="quantity">2</div>
-            <button class="increase">
-              <img src="images/chevron.svg" />
-            </button>
-          </div>
-          <div class="subtotal">
-            $4.46
-          </div>
-        </li>
       </ul>
 
       <div class="totals">
