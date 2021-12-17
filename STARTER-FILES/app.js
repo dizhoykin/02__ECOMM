@@ -1,4 +1,4 @@
-const menuItems = [
+const menuItemsDB = [
     {
         name: 'French Fries with Ketchup',
         price: 223,
@@ -43,4 +43,46 @@ const menuItems = [
     }
 ]
 
-console.log();
+
+const addFeatureValue = (element, className, value) => {
+  const featureValueElement = element.querySelector(className);
+  featureValueElement.textContent = value;
+};
+
+const menuItems = document.querySelectorAll('.menu-item');
+const emptyText = document.querySelector('.empty');
+
+const cartItemTemplate = document.querySelector('#cart-item-template').content;
+const cartItemNode = cartItemTemplate.querySelector('.cart-item');
+const cartSummary = document.querySelector('.cart-summary');
+
+for (let i = 0; i < menuItems.length; i++) {
+  let plateButtons = menuItems[i].querySelector('.content').querySelector('.add');
+  plateButtons.addEventListener('click', () => {
+    plateButtons.classList.remove('add');
+    plateButtons.classList.add('in-cart');
+    plateButtons.innerHTML = '<img src="images/check.svg" alt="Check" /> In Cart';
+    emptyText.classList.add('invisible');
+
+    const cartItem = cartItemNode.cloneNode(true);
+    const quantity = cartItem.querySelector('.quantity');
+    const quantityTotal = cartItem.querySelector('.quantity-total');
+    addFeatureValue(cartItem, '.name', menuItemsDB[i].name);
+    addFeatureValue(cartItem, '.price','$' + menuItemsDB[i].price / 100);
+    addFeatureValue(cartItem, '.subtotal','$' + (menuItemsDB[i].price / 100 * quantityTotal.textContent).toFixed(2));
+
+
+    const decreaseButton = cartItem.querySelector('.decrease');
+    const increaseButton = cartItem.querySelector('.increase');
+
+    increaseButton.addEventListener('click', () => {
+      quantity.textcontent = quantity.textContent++;
+      quantityTotal.textcontent = quantityTotal.textContent++;
+      addFeatureValue(cartItem, '.subtotal','$' + (menuItemsDB[i].price / 100 * quantityTotal.textContent).toFixed(2));
+    });
+
+
+    cartSummary.appendChild(cartItem);
+
+  });
+};
